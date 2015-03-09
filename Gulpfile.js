@@ -1,0 +1,1 @@
+require('smild')(require('gulp'));

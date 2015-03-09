@@ -1,0 +1,37 @@
+{
+    "name": "bunnycry",
+    "version": "0.0.1",
+    "description": "Bunnycry",
+    "dependencies": {
+        "lodash": "~3.5.0",
+        "inherits": "~2.0.1",
+        "bluebird": "~2.3.10",
+        "ng-common": "~0.7.5"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://trl-git-server/tierra/bunnycry"
+    },
+    "devDependencies": {
+        "browserify": "~7.0.2",
+        "browserify-istanbul": "~0.1.2",
+        "debowerify": "~1.2.0",
+        "browserify-shim": "~3.8.1",
+        "gulp": "~3.8.7",
+        "smild": "~0.7.0"
+    },
+    "engines": {
+        "node": ">=0.10.0"
+    },
+    "license": "MIT",
+    "smild": {
+        "module": true,
+        "testTransforms": [
+            "debowerify",
+            "browserify-istanbul"
+        ]
+    },
+    "publishConfig": {
+        "registry": "http://tierra-npm-repository:4873/"
+    }
+}

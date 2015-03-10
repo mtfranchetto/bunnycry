@@ -26,7 +26,7 @@ describe('ViewModels', function () {
         var propertyWatcher = new TestPropertyWatcher();
         spyOn(propertyWatcher, "execute");
         var scope = rootScope.$new(),
-            viewmodel = controllerProvider('ViewModel', {'$scope': scope, 'propertyWatcher': propertyWatcher});
+            viewmodel = controllerProvider('ViewModel', {'scope': scope, 'propertyWatcher': propertyWatcher});
 
         viewmodel.testProperty = 20;
         scope.$digest();

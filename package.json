@@ -19,7 +19,7 @@
         "debowerify": "~1.2.0",
         "browserify-shim": "~3.8.1",
         "gulp": "~3.8.7",
-        "smild": "~0.9.0"
+        "smild": "~0.10.0"
     },
     "scripts": {
         "install": "bower install"

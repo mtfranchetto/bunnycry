@@ -3,10 +3,11 @@
     "version": "0.0.1",
     "description": "Bunnycry",
     "dependencies": {
-        "lodash": "~3.5.0",
-        "inherits": "~2.0.1",
         "bluebird": "~2.3.10",
-        "ng-common": "~0.7.5"
+        "inherits": "~2.0.1",
+        "lodash": "~3.5.0",
+        "ng-common": "~0.7.5",
+        "postal": "^1.0.1"
     },
     "repository": {
         "type": "git",

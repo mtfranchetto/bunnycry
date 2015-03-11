@@ -38,11 +38,11 @@ describe('ViewModels', function () {
 
     it("should watch the property of a viewmodel", function () {
         var spy = jasmine.createSpy();
-        propertiesRegistry.register('ViewModel', 'testProperty');
-        bus.subscribe('ViewModel', 'testProperty', spy);
+        propertiesRegistry.register('SampleContext', 'testProperty');
+        bus.subscribe('SampleContext', 'testProperty', spy);
         var scope = rootScope.$new(),
             viewModel = controllerProvider('ViewModel', {
-                'context': 'ViewModel',
+                'context': 'SampleContext',
                 'scope': scope,
                 'propertiesRegistry': propertiesRegistry,
                 'eventsRegistry': eventsRegistry,
@@ -58,11 +58,11 @@ describe('ViewModels', function () {
 
     it("should listen to an emit of an event", function () {
         var spy = jasmine.createSpy();
-        eventsRegistry.register('ViewModel', 'testEvent');
-        bus.subscribe('ViewModel', 'testEvent', spy);
+        eventsRegistry.register('SampleContext', 'testEvent');
+        bus.subscribe('SampleContext', 'testEvent', spy);
         var scope = rootScope.$new(),
             viewModel = controllerProvider('ViewModel', {
-                'context': 'ViewModel',
+                'context': 'SampleContext',
                 'scope': scope,
                 'bus': bus,
                 'propertiesRegistry': propertiesRegistry,
@@ -78,10 +78,10 @@ describe('ViewModels', function () {
     describe("Composable", function () {
 
         it("should compose a viewmodel into another", function () {
-            viewModelsRegistry.register('ComposableViewModel', 'toolbar', 'ToolbarViewModel');
+            viewModelsRegistry.register('SampleContext', 'toolbar', 'ToolbarViewModel');
             var scope = rootScope.$new(),
                 composableViewModel = controllerProvider('ComposableViewModel', {
-                    'context': 'ComposableViewModel',
+                    'context': 'SampleContext',
                     'scope': scope,
                     'bus': bus,
                     'propertiesRegistry': propertiesRegistry,
@@ -94,10 +94,10 @@ describe('ViewModels', function () {
         });
 
         it("should compose a viewmodel into another by aligning the namespace", function () {
-            viewModelsRegistry.register('ComposableViewModel', 'Toolbar', 'ToolbarViewModel');
+            viewModelsRegistry.register('SampleContext', 'Toolbar', 'ToolbarViewModel');
             var scope = rootScope.$new(),
                 composableViewModel = controllerProvider('ComposableViewModel', {
-                    'context': 'ComposableViewModel',
+                    'context': 'SampleContext',
                     'scope': scope,
                     'bus': bus,
                     'propertiesRegistry': propertiesRegistry,
@@ -110,10 +110,10 @@ describe('ViewModels', function () {
         });
 
         it("should compose a viewmodel into another keeping the camel case namespace", function () {
-            viewModelsRegistry.register('ComposableViewModel', 'toolbarManagement', 'ToolbarViewModel');
+            viewModelsRegistry.register('SampleContext', 'toolbarManagement', 'ToolbarViewModel');
             var scope = rootScope.$new(),
                 composableViewModel = controllerProvider('ComposableViewModel', {
-                    'context': 'ComposableViewModel',
+                    'context': 'SampleContext',
                     'scope': scope,
                     'bus': bus,
                     'propertiesRegistry': propertiesRegistry,
@@ -127,12 +127,12 @@ describe('ViewModels', function () {
 
         it("should watch a property of a composed viewmodel", function () {
             var spy = jasmine.createSpy();
-            propertiesRegistry.register('ComposableViewModel', 'toolbar.order');
-            bus.subscribe('ComposableViewModel', 'toolbar.order', spy);
-            viewModelsRegistry.register('ComposableViewModel', 'Toolbar', 'ToolbarViewModel');
+            propertiesRegistry.register('SampleContext', 'toolbar.order');
+            bus.subscribe('SampleContext', 'toolbar.order', spy);
+            viewModelsRegistry.register('SampleContext', 'Toolbar', 'ToolbarViewModel');
             var scope = rootScope.$new(),
                 composableViewModel = controllerProvider('ComposableViewModel', {
-                    'context': 'ComposableViewModel',
+                    'context': 'SampleContext',
                     'scope': scope,
                     'bus': bus,
                     'propertiesRegistry': propertiesRegistry,

@@ -31,4 +31,16 @@ describe('Registries', function () {
             }
         });
     });
+
+    it("should register correctly a component with a type that contains a dot", function () {
+        registry.register('app', 'viewModel.login', {
+            execute: 'exe'
+        });
+
+        expect(registry.obtain('app')).toEqual({
+            'viewModel.login': {
+                execute: 'exe'
+            }
+        });
+    });
 });

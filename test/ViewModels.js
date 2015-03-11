@@ -92,5 +92,44 @@ describe('ViewModels', function () {
 
             expect(composableViewModel.toolbar.order).toEqual('asc');
         });
+
+        it("should compose a viewmodel into another by aligning the namespace", function () {
+            viewModelsRegistry.register('ComposableViewModel', 'Toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'ComposableViewModel',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            expect(composableViewModel.toolbar.order).toEqual('asc');
+        });
+
+        it("should watch a property of a composed viewmodel", function () {
+            var spy = jasmine.createSpy();
+            propertiesRegistry.register('ComposableViewModel', 'toolbar.order');
+            bus.subscribe('ComposableViewModel', 'toolbar.order', spy);
+            viewModelsRegistry.register('ComposableViewModel', 'Toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'ComposableViewModel',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            composableViewModel.toolbar.order = 'desc';
+            scope.$digest();
+
+            expect(spy).toHaveBeenCalledWith({newValue: 'desc', oldValue: 'desc'});
+            expect(spy.calls.count()).toBe(1);
+        });
     });
 });

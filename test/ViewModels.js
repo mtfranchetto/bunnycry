@@ -4,7 +4,7 @@ var angular = require('angular'),
     mocks = require('angular-mocks'),
     module = window.module,
     inject = window.inject,
-    TestPropertyCommand = require('./fixtures/TestPropertyCommand'),
+    Command = require('../lib/Command'),
     Registry = require('../lib/Registry'),
     ViewModel = require('../lib/ViewModel');
 
@@ -24,7 +24,7 @@ describe('ViewModels', function () {
     }));
 
     it("should watch the property of a viewmodel", function () {
-        var propertyCommand = new TestPropertyCommand(),
+        var propertyCommand = new Command(),
             propertiesRegistry = new Registry();
         propertiesRegistry.register('ViewModel', 'testProperty', propertyCommand);
         spyOn(propertyCommand, "execute");

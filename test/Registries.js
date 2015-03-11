@@ -10,23 +10,25 @@ describe('Registries', function () {
         registry = new Registry();
     });
 
-    it("should register a component to a context", function () {
-        registry.register('app', {
-            execute: 'exe'
-        });
-
-        expect(registry.obtain('app')[0]).toEqual({
-            execute: 'exe'
-        });
-    });
-
     it("should register a component to a context with a type", function () {
         registry.register('app', 'section1', {
             execute: 'exe'
         });
 
-        expect(registry.obtain('app', 'section1')[0]).toEqual({
+        expect(registry.obtain('app', 'section1')).toEqual({
             execute: 'exe'
+        });
+    });
+
+    it("should obtain a dictionary of components bound to a context", function () {
+        registry.register('app', 'section1', {
+            execute: 'exe'
+        });
+
+        expect(registry.obtain('app')).toEqual({
+            'section1': {
+                execute: 'exe'
+            }
         });
     });
 });

@@ -147,5 +147,31 @@ describe('ViewModels', function () {
             expect(spy).toHaveBeenCalledWith({newValue: 'desc', oldValue: 'desc'});
             expect(spy.calls.count()).toBe(1);
         });
+
+        it("should watch a property of a composed viewmodel during multiple digest cycles", function () {
+            var spy = jasmine.createSpy();
+            propertiesRegistry.register('SampleContext', 'toolbar.order');
+            bus.subscribe('SampleContext', 'toolbar.order', spy);
+            viewModelsRegistry.register('SampleContext', 'Toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'SampleContext',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            composableViewModel.toolbar.order = 'desc';
+            scope.$digest();
+            composableViewModel.toolbar.order = 'asc';
+            scope.$digest();
+
+            expect(spy).toHaveBeenCalledWith({newValue: 'desc', oldValue: 'desc'});
+            expect(spy).toHaveBeenCalledWith({newValue: 'asc', oldValue: 'desc'});
+            expect(spy.calls.count()).toBe(2);
+        });
     });
 });

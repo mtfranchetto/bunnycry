@@ -7,9 +7,13 @@ var angular = require('angular'),
     Command = require('../lib/Command'),
     Registry = require('../lib/Registry'),
     ViewModel = require('../lib/ViewModel'),
+    ComposableViewModel = require('../lib/ComposableViewModel'),
+    ToolbarViewModel = require('./fixtures/ToolbarViewModel'),
     Bus = require('../lib/messages/Bus');
 
 angular.module('test', ['ngMock'])
+    .controller('ComposableViewModel', ComposableViewModel)
+    .controller('ToolbarViewModel', ToolbarViewModel)
     .controller('ViewModel', ViewModel);
 
 describe('ViewModels', function () {
@@ -20,6 +24,7 @@ describe('ViewModels', function () {
         rootScope = null,
         propertiesRegistry = null,
         eventsRegistry = null,
+        viewModelsRegistry = null,
         bus = null;
 
     beforeEach(inject(function (_$controller_, _$rootScope_) {
@@ -27,6 +32,7 @@ describe('ViewModels', function () {
         rootScope = _$rootScope_;
         propertiesRegistry = new Registry();
         eventsRegistry = new Registry();
+        viewModelsRegistry = new Registry();
         bus = new Bus();
     }));
 
@@ -35,7 +41,7 @@ describe('ViewModels', function () {
         propertiesRegistry.register('ViewModel', 'testProperty');
         bus.subscribe('ViewModel', 'testProperty', spy);
         var scope = rootScope.$new(),
-            viewmodel = controllerProvider('ViewModel', {
+            viewModel = controllerProvider('ViewModel', {
                 'context': 'ViewModel',
                 'scope': scope,
                 'propertiesRegistry': propertiesRegistry,
@@ -43,7 +49,7 @@ describe('ViewModels', function () {
                 'bus': bus
             });
 
-        viewmodel.testProperty = 20;
+        viewModel.testProperty = 20;
         scope.$digest();
 
         expect(spy).toHaveBeenCalledWith({newValue: 20, oldValue: 20});
@@ -55,7 +61,7 @@ describe('ViewModels', function () {
         eventsRegistry.register('ViewModel', 'testEvent');
         bus.subscribe('ViewModel', 'testEvent', spy);
         var scope = rootScope.$new(),
-            viewmodel = controllerProvider('ViewModel', {
+            viewModel = controllerProvider('ViewModel', {
                 'context': 'ViewModel',
                 'scope': scope,
                 'bus': bus,
@@ -67,5 +73,24 @@ describe('ViewModels', function () {
 
         expect(spy).toHaveBeenCalledWith({data: {test: 10}});
         expect(spy.calls.count()).toBe(1);
+    });
+
+    describe("Composable", function () {
+
+        it("should compose a viewmodel into another", function () {
+            viewModelsRegistry.register('ComposableViewModel', 'toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'ComposableViewModel',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            expect(composableViewModel.toolbar.order).toEqual('asc');
+        });
     });
 });

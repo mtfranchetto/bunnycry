@@ -109,6 +109,22 @@ describe('ViewModels', function () {
             expect(composableViewModel.toolbar.order).toEqual('asc');
         });
 
+        it("should compose a viewmodel into another keeping the camel case namespace", function () {
+            viewModelsRegistry.register('ComposableViewModel', 'toolbarManagement', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'ComposableViewModel',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            expect(composableViewModel.toolbarManagement.order).toEqual('asc');
+        });
+
         it("should watch a property of a composed viewmodel", function () {
             var spy = jasmine.createSpy();
             propertiesRegistry.register('ComposableViewModel', 'toolbar.order');

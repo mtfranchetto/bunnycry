@@ -12,8 +12,10 @@ var angular = require('angular'),
     Bus = require('../lib/messages/Bus');
 
 angular.module('test', ['ngMock'])
+    .value('Context', 'DEFAULT')
+    .value('Namespace', 'DEFAULT')
     .controller('ComposableViewModel', ComposableViewModel)
-    .controller('ToolbarViewModel', ToolbarViewModel)
+    .controller('ToolbarViewModel', ['Context', 'Namespace', 'Bus', ToolbarViewModel])
     .controller('ViewModel', ViewModel);
 
 describe('ViewModels', function () {
@@ -172,6 +174,23 @@ describe('ViewModels', function () {
             expect(spy).toHaveBeenCalledWith({newValue: 'desc', oldValue: 'desc'});
             expect(spy).toHaveBeenCalledWith({newValue: 'asc', oldValue: 'desc'});
             expect(spy.calls.count()).toBe(2);
+        });
+
+        it("should pass the context and the namespace to the viewmodel", function () {
+            viewModelsRegistry.register('SampleContext', 'toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'SampleContext',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            expect(composableViewModel.toolbar._namespace).toEqual('toolbar');
+            expect(composableViewModel.toolbar._context).toEqual('SampleContext');
         });
     });
 });

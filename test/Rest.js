@@ -15,7 +15,7 @@ describe('Rest', function () {
 
         expect(service.getList).toBeDefined();
         expect(service.getList() instanceof Promise).toBe(true);
-        expect(restAdapter._httpClient.get).toHaveBeenCalledWith("getListApi");
+        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("getListApi");
     });
 
     it("should build a service for rest with an endpoint", function () {
@@ -25,23 +25,47 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.getList();
-        expect(restAdapter._httpClient.get).toHaveBeenCalledWith("http://endpoint.com/getListApi");
-    });
-
-    it("should create a get method on the service", function () {
-
+        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi");
     });
 
     it("should create a post method on the service", function () {
+        spyOn(httpClient, "post").and.returnValue(Promise.resolve());
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
 
+        service.addList();
+        expect(restAdapter._httpClient.post.calls.argsFor(0)[0]).toEqual("http://endpoint.com/addListApi");
     });
 
     it("should create a delete method on the service", function () {
+        spyOn(httpClient, "delete").and.returnValue(Promise.resolve());
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
 
+        service.deleteList();
+        expect(restAdapter._httpClient.delete.calls.argsFor(0)[0]).toEqual("http://endpoint.com/deleteListApi");
     });
 
-    it("should create an update method on the service", function () {
+    it("should create a put method on the service", function () {
+        spyOn(httpClient, "put").and.returnValue(Promise.resolve());
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
 
+        service.updateList();
+        expect(restAdapter._httpClient.put.calls.argsFor(0)[0]).toEqual("http://endpoint.com/updateListApi");
+    });
+
+    it("should create a jsonp method on the service", function () {
+        spyOn(httpClient, "jsonp").and.returnValue(Promise.resolve());
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.jsonpList();
+        expect(restAdapter._httpClient.jsonp.calls.argsFor(0)[0]).toEqual("http://endpoint.com/jsonpListApi");
     });
 
     it("should parse the result with the parser specified", function () {

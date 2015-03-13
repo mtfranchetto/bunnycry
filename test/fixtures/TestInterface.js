@@ -8,7 +8,11 @@ var TestInterface = function () {
 
 };
 
-TestInterface.prototype.getList = construct(Methods.GET, "getListApi");
+TestInterface.prototype.getList = construct(Methods.GET, "getListApi", TestType);
+
+TestInterface.prototype.getListNoParse = construct(Methods.GET, "getListApi");
+
+TestInterface.prototype.getListWithId = construct(Methods.GET, "getListApi/:$:");
 
 TestInterface.prototype.addList = construct(Methods.POST, "addListApi");
 

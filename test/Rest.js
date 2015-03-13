@@ -117,6 +117,17 @@ describe('Rest', function () {
     });
 
     it("should pass an object to the body post", function () {
+        spyOn(httpClient, "post").and.returnValue(Promise.resolve({'description': 'desc'}));
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
 
+        service.addListWithIdAndData(60, {
+            "description": "test list"
+        });
+
+        expect(restAdapter._httpClient.post).toHaveBeenCalledWith("http://endpoint.com/addListApi/60", {
+            "description": "test list"
+        }, null);
     });
 });

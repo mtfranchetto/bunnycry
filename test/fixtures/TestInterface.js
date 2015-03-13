@@ -18,6 +18,8 @@ TestInterface.prototype.getListWithIdAndQuery = construct(Methods.GET, "getListA
 
 TestInterface.prototype.addList = construct(Methods.POST, "addListApi");
 
+TestInterface.prototype.addListWithIdAndData = construct(Methods.POST, "addListApi/${}");
+
 TestInterface.prototype.deleteList = construct(Methods.DELETE, "deleteListApi");
 
 TestInterface.prototype.updateList = construct(Methods.PUT, "updateListApi");

@@ -41,6 +41,7 @@
     "smild": {
         "module": true,
         "testTransforms": [
+            "browserify-istanbul",
             "browserify-shim"
         ]
     },

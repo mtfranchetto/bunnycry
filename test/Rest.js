@@ -16,7 +16,7 @@ describe('Rest', function () {
 
         expect(service.getList).toBeDefined();
         expect(service.getList() instanceof Promise).toBe(true);
-        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("getListApi");
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("getListApi");
     });
 
     it("should build a service for rest with an endpoint", function () {
@@ -26,7 +26,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.getList();
-        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi");
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi");
     });
 
     it("should create a post method on the service", function () {
@@ -36,7 +36,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.addList();
-        expect(restAdapter._httpClient.post.calls.argsFor(0)[0]).toEqual("http://endpoint.com/addListApi");
+        expect(httpClient.post.calls.argsFor(0)[0]).toEqual("http://endpoint.com/addListApi");
     });
 
     it("should create a delete method on the service", function () {
@@ -46,7 +46,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.deleteList();
-        expect(restAdapter._httpClient.delete.calls.argsFor(0)[0]).toEqual("http://endpoint.com/deleteListApi");
+        expect(httpClient.delete.calls.argsFor(0)[0]).toEqual("http://endpoint.com/deleteListApi");
     });
 
     it("should create a put method on the service", function () {
@@ -56,7 +56,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.updateList();
-        expect(restAdapter._httpClient.put.calls.argsFor(0)[0]).toEqual("http://endpoint.com/updateListApi");
+        expect(httpClient.put.calls.argsFor(0)[0]).toEqual("http://endpoint.com/updateListApi");
     });
 
     it("should create a jsonp method on the service", function () {
@@ -66,7 +66,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.jsonpList();
-        expect(restAdapter._httpClient.jsonp.calls.argsFor(0)[0]).toEqual("http://endpoint.com/jsonpListApi");
+        expect(httpClient.jsonp.calls.argsFor(0)[0]).toEqual("http://endpoint.com/jsonpListApi");
     });
 
     it("should parse the result with the parser specified", function () {
@@ -76,7 +76,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.getList();
-        var args = restAdapter._httpClient.get.calls.argsFor(0);
+        var args = httpClient.get.calls.argsFor(0);
         expect(args[0]).toEqual("http://endpoint.com/getListApi");
         expect(args[1]._gson._types[0]).toEqual(TestType);
     });
@@ -88,7 +88,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.getListNoParse().then(function (response) {
-            var args = restAdapter._httpClient.get.calls.argsFor(0);
+            var args = httpClient.get.calls.argsFor(0);
             expect(response.description).toEqual('desc');
             expect(args[0]).toEqual("http://endpoint.com/getListApi");
             expect(args[1]).toBe(null);
@@ -103,7 +103,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.getListWithId(55);
-        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55");
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55");
     });
 
     it("should substitute the query string param if matches", function () {
@@ -113,7 +113,7 @@ describe('Rest', function () {
         var service = restAdapter.create(TestInterface);
 
         service.getListWithIdAndQuery(55, 'couch');
-        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55?query=couch");
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55?query=couch");
     });
 
     it("should pass an object to the body post", function () {
@@ -126,7 +126,7 @@ describe('Rest', function () {
             "description": "test list"
         });
 
-        expect(restAdapter._httpClient.post).toHaveBeenCalledWith("http://endpoint.com/addListApi/60", {
+        expect(httpClient.post).toHaveBeenCalledWith("http://endpoint.com/addListApi/60", {
             "description": "test list"
         }, null);
     });
@@ -141,7 +141,7 @@ describe('Rest', function () {
             "description": "test list"
         });
 
-        expect(restAdapter._httpClient.put).toHaveBeenCalledWith("http://endpoint.com/updateListApi/60", {
+        expect(httpClient.put).toHaveBeenCalledWith("http://endpoint.com/updateListApi/60", {
             "description": "test list"
         }, null);
     });

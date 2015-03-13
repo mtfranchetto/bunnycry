@@ -1,6 +1,6 @@
 "use strict";
 
-var ToolbarViewModel = function (context, namespace, bus) {
+var ToolbarViewModel = function (context, namespace) {
     this._namespace = namespace;
     this._context = context;
 };

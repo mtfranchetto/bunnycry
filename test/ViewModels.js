@@ -14,6 +14,7 @@ var angular = require('angular'),
 angular.module('test', ['ngMock'])
     .value('Context', 'DEFAULT')
     .value('Namespace', 'DEFAULT')
+    .service('Bus', Bus)
     .controller('ComposableViewModel', ComposableViewModel)
     .controller('ToolbarViewModel', ['Context', 'Namespace', 'Bus', ToolbarViewModel])
     .controller('ViewModel', ViewModel);

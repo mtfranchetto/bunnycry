@@ -130,4 +130,19 @@ describe('Rest', function () {
             "description": "test list"
         }, null);
     });
+
+    it("should pass an object also to the put body", function () {
+        spyOn(httpClient, "put").and.returnValue(Promise.resolve({'description': 'desc'}));
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.updateListWithIdAndData(60, {
+            "description": "test list"
+        });
+
+        expect(restAdapter._httpClient.put).toHaveBeenCalledWith("http://endpoint.com/updateListApi/60", {
+            "description": "test list"
+        }, null);
+    });
 });

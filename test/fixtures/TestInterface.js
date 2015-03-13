@@ -24,6 +24,8 @@ TestInterface.prototype.deleteList = construct(Methods.DELETE, "deleteListApi");
 
 TestInterface.prototype.updateList = construct(Methods.PUT, "updateListApi");
 
+TestInterface.prototype.updateListWithIdAndData = construct(Methods.PUT, "updateListApi/${}");
+
 TestInterface.prototype.jsonpList = construct(Methods.JSONP, "jsonpListApi");
 
 module.exports = TestInterface;

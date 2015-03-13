@@ -97,11 +97,23 @@ describe('Rest', function () {
     });
 
     it("should substitute the url param if matches", function () {
-        
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getListWithId(55);
+        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55");
     });
 
     it("should substitute the query string param if matches", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
 
+        service.getListWithIdAndQuery(55, 'couch');
+        expect(restAdapter._httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55?query=couch");
     });
 
     it("should pass an object to the body post", function () {

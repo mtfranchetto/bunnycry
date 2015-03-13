@@ -12,7 +12,9 @@ TestInterface.prototype.getList = construct(Methods.GET, "getListApi", TestType)
 
 TestInterface.prototype.getListNoParse = construct(Methods.GET, "getListApi");
 
-TestInterface.prototype.getListWithId = construct(Methods.GET, "getListApi/:$:");
+TestInterface.prototype.getListWithId = construct(Methods.GET, "getListApi/${}");
+
+TestInterface.prototype.getListWithIdAndQuery = construct(Methods.GET, "getListApi/${}?query=${}");
 
 TestInterface.prototype.addList = construct(Methods.POST, "addListApi");
 

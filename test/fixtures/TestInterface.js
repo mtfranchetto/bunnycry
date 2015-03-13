@@ -1,6 +1,6 @@
 "use strict";
 
-var construct = require('../../lib/rest/InterfaceConstruct'),
+var r = require('../../lib/rest/InterfaceConstructor'),
     Methods = require('ng-common').net.Methods,
     TestType = require('./TestType');
 
@@ -8,24 +8,24 @@ var TestInterface = function () {
 
 };
 
-TestInterface.prototype.getList = construct(Methods.GET, "getListApi", TestType);
+TestInterface.prototype.getList = r(Methods.GET, "getListApi", TestType);
 
-TestInterface.prototype.getListNoParse = construct(Methods.GET, "getListApi");
+TestInterface.prototype.getListNoParse = r(Methods.GET, "getListApi");
 
-TestInterface.prototype.getListWithId = construct(Methods.GET, "getListApi/${}");
+TestInterface.prototype.getListWithId = r(Methods.GET, "getListApi/${}");
 
-TestInterface.prototype.getListWithIdAndQuery = construct(Methods.GET, "getListApi/${}?query=${}");
+TestInterface.prototype.getListWithIdAndQuery = r(Methods.GET, "getListApi/${}?query=${}");
 
-TestInterface.prototype.addList = construct(Methods.POST, "addListApi");
+TestInterface.prototype.addList = r(Methods.POST, "addListApi");
 
-TestInterface.prototype.addListWithIdAndData = construct(Methods.POST, "addListApi/${}");
+TestInterface.prototype.addListWithIdAndData = r(Methods.POST, "addListApi/${}");
 
-TestInterface.prototype.deleteList = construct(Methods.DELETE, "deleteListApi");
+TestInterface.prototype.deleteList = r(Methods.DELETE, "deleteListApi");
 
-TestInterface.prototype.updateList = construct(Methods.PUT, "updateListApi");
+TestInterface.prototype.updateList = r(Methods.PUT, "updateListApi");
 
-TestInterface.prototype.updateListWithIdAndData = construct(Methods.PUT, "updateListApi/${}");
+TestInterface.prototype.updateListWithIdAndData = r(Methods.PUT, "updateListApi/${}");
 
-TestInterface.prototype.jsonpList = construct(Methods.JSONP, "jsonpListApi");
+TestInterface.prototype.jsonpList = r(Methods.JSONP, "jsonpListApi");
 
 module.exports = TestInterface;

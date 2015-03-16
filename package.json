@@ -1,6 +1,6 @@
 {
     "name": "bunnycry",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Bunnycry",
     "dependencies": {
         "bluebird": "~2.3.10",

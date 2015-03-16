@@ -145,4 +145,14 @@ describe('Rest', function () {
             "description": "test list"
         }, null);
     });
+
+    it("should substitute the url params also if the placeholder has a name", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getListWithIdName(55);
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55");
+    });
 });

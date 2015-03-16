@@ -14,6 +14,8 @@ TestInterface.prototype.getListNoParse = r(Methods.GET, "getListApi");
 
 TestInterface.prototype.getListWithId = r(Methods.GET, "getListApi/${}");
 
+TestInterface.prototype.getListWithIdName = r(Methods.GET, "getListApi/${id}");
+
 TestInterface.prototype.getListWithIdAndQuery = r(Methods.GET, "getListApi/${}?query=${}");
 
 TestInterface.prototype.addList = r(Methods.POST, "addListApi");

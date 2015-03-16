@@ -2,13 +2,16 @@
 
 var r = require('../../lib/rest/InterfaceConstructor'),
     Methods = require('ng-common').net.Methods,
-    TestType = require('./TestType');
+    TestType = require('./TestType'),
+    TestType2 = require('./TestType2');
 
 var TestInterface = function () {
 
 };
 
 TestInterface.prototype.getList = r(Methods.GET, "getListApi", TestType);
+
+TestInterface.prototype.getListMultiParse = r(Methods.GET, "getListApi", [TestType, TestType2]);
 
 TestInterface.prototype.getListNoParse = r(Methods.GET, "getListApi");
 

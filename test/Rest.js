@@ -5,7 +5,8 @@ var Promise = require('bluebird'),
     httpClient = new common.net.HttpClient(),
     RestAdapter = require('../lib/rest/RestAdapter'),
     TestInterface = require('./fixtures/TestInterface'),
-    TestType = require('./fixtures/TestType');
+    TestType = require('./fixtures/TestType'),
+    TestType2 = require('./fixtures/TestType2');
 
 describe('Rest', function () {
 
@@ -154,5 +155,18 @@ describe('Rest', function () {
 
         service.getListWithIdName(55);
         expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55");
+    });
+
+    it("should parse an array of types", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve());
+        var restAdapter = new RestAdapter(httpClient);
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getListMultiParse();
+        var args = httpClient.get.calls.argsFor(0);
+        expect(args[0]).toEqual("http://endpoint.com/getListApi");
+        expect(args[1]._gson._types[0]).toEqual(TestType);
+        expect(args[1]._gson._types[1]).toEqual(TestType2);
     });
 });

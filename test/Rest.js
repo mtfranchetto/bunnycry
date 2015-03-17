@@ -10,10 +10,15 @@ var Promise = require('bluebird'),
 
 describe('Rest', function () {
 
+    var restAdapter = null;
+
+    beforeEach(function () {
+        restAdapter = new RestAdapter(httpClient);
+    });
+
     it("should build a service for rest", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient),
-            service = restAdapter.create(TestInterface);
+        var service = restAdapter.create(TestInterface);
 
         expect(service.getList).toBeDefined();
         expect(service.getList() instanceof Promise).toBe(true);
@@ -22,7 +27,6 @@ describe('Rest', function () {
 
     it("should build a service for rest with an endpoint", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -32,7 +36,6 @@ describe('Rest', function () {
 
     it("should create a post method on the service", function () {
         spyOn(httpClient, "post").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -42,7 +45,6 @@ describe('Rest', function () {
 
     it("should create a delete method on the service", function () {
         spyOn(httpClient, "delete").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -52,7 +54,6 @@ describe('Rest', function () {
 
     it("should create a put method on the service", function () {
         spyOn(httpClient, "put").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -62,7 +63,6 @@ describe('Rest', function () {
 
     it("should create a jsonp method on the service", function () {
         spyOn(httpClient, "jsonp").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -72,7 +72,6 @@ describe('Rest', function () {
 
     it("should parse the result with the parser specified", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -84,7 +83,6 @@ describe('Rest', function () {
 
     it("should return the result as-is if no parser is specified", function (done) {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -99,7 +97,6 @@ describe('Rest', function () {
 
     it("should substitute the url param if matches", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -109,7 +106,6 @@ describe('Rest', function () {
 
     it("should substitute the query string param if matches", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -119,7 +115,6 @@ describe('Rest', function () {
 
     it("should pass an object to the body post", function () {
         spyOn(httpClient, "post").and.returnValue(Promise.resolve({'description': 'desc'}));
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -134,7 +129,6 @@ describe('Rest', function () {
 
     it("should pass an object also to the put body", function () {
         spyOn(httpClient, "put").and.returnValue(Promise.resolve({'description': 'desc'}));
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -149,7 +143,6 @@ describe('Rest', function () {
 
     it("should substitute the url params also if the placeholder has a name", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 
@@ -159,7 +152,6 @@ describe('Rest', function () {
 
     it("should parse an array of types", function () {
         spyOn(httpClient, "get").and.returnValue(Promise.resolve());
-        var restAdapter = new RestAdapter(httpClient);
         restAdapter.setEndpoint("http://endpoint.com/");
         var service = restAdapter.create(TestInterface);
 

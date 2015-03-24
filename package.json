@@ -1,11 +1,11 @@
 {
     "name": "bunnycry",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Bunnycry",
     "dependencies": {
-        "bluebird": "~2.3.10",
-        "inherits": "~2.0.1",
         "lodash": "~3.5.0",
+        "inherits": "2.0.1",
+        "bluebird": "~2.9.0",
         "ng-common": "~0.8.0",
         "object-path": "^0.9.0",
         "postal": "^1.0.1"

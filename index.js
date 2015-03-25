@@ -8,7 +8,6 @@ module.exports = {
         "InterfaceConstructor": require('./lib/rest/InterfaceConstructor'),
         "RestAdapter": require('./lib/rest/RestAdapter')
     },
-    "Command": require('./lib/Command'),
     "ComposableViewModel": require('./lib/ComposableViewModel'),
     "Registry": require('./lib/Registry'),
     "ViewModel": require('./lib/ViewModel')

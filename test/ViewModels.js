@@ -192,5 +192,25 @@ describe('ViewModels', function () {
             expect(composableViewModel.toolbar._namespace).toEqual('toolbar');
             expect(composableViewModel.toolbar._context).toEqual('SampleContext');
         });
+
+        it("should dispose all the viewmodels on scope destruction", function () {
+            viewModelsRegistry.register('SampleContext', 'toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'SampleContext',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+            spyOn(composableViewModel.toolbar, 'destroy');
+
+            scope.$destroy();
+
+            expect(composableViewModel.toolbar.destroy).toHaveBeenCalled();
+
+        });
     });
 });

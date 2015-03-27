@@ -122,6 +122,17 @@ describe('Rest', function () {
         expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55?query=couch&test=foo");
     });
 
+    it("should preserve url during multiple params substitutions", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getListWithIdAndMultipleParams(55, 'couch', 'foo');
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/55?query=couch&test=foo");
+
+        service.getListWithIdAndMultipleParams(55, 'couch2', 'foo2');
+        expect(httpClient.get.calls.argsFor(1)[0]).toEqual("http://endpoint.com/getListApi/55?query=couch2&test=foo2");
+    });
 
     it("should pass an object to the body post", function () {
         spyOn(httpClient, "post").and.returnValue(Promise.resolve({'description': 'desc'}));

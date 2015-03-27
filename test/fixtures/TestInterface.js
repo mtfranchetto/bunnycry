@@ -21,6 +21,8 @@ TestInterface.prototype.getListWithIdName = r(Methods.GET, "getListApi/${id}");
 
 TestInterface.prototype.getListWithIdAndQuery = r(Methods.GET, "getListApi/${}?query=${}");
 
+TestInterface.prototype.getListWithIdAndMultipleParams = r(Methods.GET, "getListApi/${}?query=${}&test=${}");
+
 TestInterface.prototype.addList = r(Methods.POST, "addListApi");
 
 TestInterface.prototype.addListWithIdAndData = r(Methods.POST, "addListApi/${}");

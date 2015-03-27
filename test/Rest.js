@@ -182,4 +182,13 @@ describe('Rest', function () {
         expect(args[1]._gson._types[0]).toEqual(TestType);
         expect(args[1]._gson._types[1]).toEqual(TestType2);
     });
+
+    it("should strip the placeholder if nothing is passed", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getListWithIdName();
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/");
+    });
 });

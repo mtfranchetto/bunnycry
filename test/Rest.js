@@ -191,4 +191,13 @@ describe('Rest', function () {
         service.getListWithIdName();
         expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/");
     });
+
+    it("should not strip the placeholder if 0 is passed", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getListWithIdAndMultipleParams(10, 0);
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/10?query=0&test=");
+    });
 });

@@ -38,46 +38,49 @@ describe('ViewModels', function () {
         bus = new Bus();
     }));
 
-    it("should watch the property of a viewmodel", function () {
-        var spy = jasmine.createSpy();
-        propertiesRegistry.register('SampleContext', 'testProperty');
-        bus.subscribe('SampleContext', 'testProperty', spy);
-        var scope = rootScope.$new(),
-            viewModel = controllerProvider('ViewModel', {
-                'context': 'SampleContext',
-                'scope': scope,
-                'propertiesRegistry': propertiesRegistry,
-                'eventsRegistry': eventsRegistry,
-                'bus': bus
-            });
+    describe("when using a viewmodel", function () {
 
-        viewModel.testProperty = 20;
-        scope.$digest();
+        it("should watch the property of a viewmodel", function () {
+            var spy = jasmine.createSpy();
+            propertiesRegistry.register('SampleContext', 'testProperty');
+            bus.subscribe('SampleContext', 'testProperty', spy);
+            var scope = rootScope.$new(),
+                viewModel = controllerProvider('ViewModel', {
+                    'context': 'SampleContext',
+                    'scope': scope,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'bus': bus
+                });
 
-        expect(spy).toHaveBeenCalledWith({newValue: 20, oldValue: 20});
-        expect(spy.calls.count()).toBe(1);
+            viewModel.testProperty = 20;
+            scope.$digest();
+
+            expect(spy).toHaveBeenCalledWith({newValue: 20, oldValue: 20});
+            expect(spy.calls.count()).toBe(1);
+        });
+
+        it("should listen to an emit of an event", function () {
+            var spy = jasmine.createSpy();
+            eventsRegistry.register('SampleContext', 'testEvent');
+            bus.subscribe('SampleContext', 'testEvent', spy);
+            var scope = rootScope.$new(),
+                viewModel = controllerProvider('ViewModel', {
+                    'context': 'SampleContext',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry
+                });
+
+            scope.$emit('testEvent', {test: 10});
+
+            expect(spy).toHaveBeenCalledWith({data: {test: 10}});
+            expect(spy.calls.count()).toBe(1);
+        });
     });
 
-    it("should listen to an emit of an event", function () {
-        var spy = jasmine.createSpy();
-        eventsRegistry.register('SampleContext', 'testEvent');
-        bus.subscribe('SampleContext', 'testEvent', spy);
-        var scope = rootScope.$new(),
-            viewModel = controllerProvider('ViewModel', {
-                'context': 'SampleContext',
-                'scope': scope,
-                'bus': bus,
-                'propertiesRegistry': propertiesRegistry,
-                'eventsRegistry': eventsRegistry
-            });
-
-        scope.$emit('testEvent', {test: 10});
-
-        expect(spy).toHaveBeenCalledWith({data: {test: 10}});
-        expect(spy.calls.count()).toBe(1);
-    });
-
-    describe("Composable", function () {
+    describe("when using a composable view model", function () {
 
         it("should compose a viewmodel into another", function () {
             viewModelsRegistry.register('SampleContext', 'toolbar', 'ToolbarViewModel');

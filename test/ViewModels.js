@@ -38,7 +38,7 @@ describe('ViewModels', function () {
         bus = new Bus();
     }));
 
-    describe("When using a viewmodel", function () {
+    describe("when using a viewmodel", function () {
 
         it("should watch the property of a viewmodel", function () {
             var spy = jasmine.createSpy();
@@ -80,7 +80,7 @@ describe('ViewModels', function () {
         });
     });
 
-    describe("When using a composable view model", function () {
+    describe("when using a composable view model", function () {
 
         it("should compose a viewmodel into another", function () {
             viewModelsRegistry.register('SampleContext', 'toolbar', 'ToolbarViewModel');

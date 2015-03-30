@@ -6,7 +6,10 @@ var Promise = require('bluebird'),
     RestAdapter = require('../lib/rest/RestAdapter'),
     TestInterface = require('./fixtures/TestInterface'),
     TestType = require('./fixtures/TestType'),
-    TestType2 = require('./fixtures/TestType2');
+    TestType2 = require('./fixtures/TestType2'),
+    GsonParser = common.net.GsonParser,
+    StrictGsonParser = common.net.StrictGsonParser,
+    _ = require('lodash');
 
 describe('Rest', function () {
 
@@ -25,7 +28,7 @@ describe('Rest', function () {
         expect(httpClient.get.calls.argsFor(0)[0]).toEqual("getListApi");
     });
 
-    describe("When an endpoint is provided", function () {
+    describe("when an endpoint is provided", function () {
 
         it("should build a service for rest with an endpoint", function () {
             spyOn(httpClient, "get").and.returnValue(Promise.resolve());
@@ -73,7 +76,7 @@ describe('Rest', function () {
         });
     });
 
-    describe("When data needs to be parsed", function () {
+    describe("when data needs to be parsed", function () {
 
         it("should parse the result with the parser specified", function () {
             spyOn(httpClient, "get").and.returnValue(Promise.resolve());
@@ -108,12 +111,35 @@ describe('Rest', function () {
             service.getListMultiParse();
             var args = httpClient.get.calls.argsFor(0);
             expect(args[0]).toEqual("http://endpoint.com/getListApi");
+            expect(args[1] instanceof GsonParser).toBe(true);
             expect(args[1]._gson._types[0]).toEqual(TestType);
             expect(args[1]._gson._types[1]).toEqual(TestType2);
         });
+
+        describe("and you need different parser", function () {
+
+            it("should use a specific parser", function () {
+                spyOn(httpClient, "get").and.returnValue(Promise.resolve());
+                restAdapter.setEndpoint("http://endpoint.com/");
+                restAdapter.setParserHandler(function (method, type) {
+                    if (method === "getList")
+                        return new StrictGsonParser([type]);
+                });
+                var service = restAdapter.create(TestInterface);
+                service.getList();
+                service.getListMultiParse();
+
+                var firstCallArguments = httpClient.get.calls.argsFor(0),
+                    secondCallArguments = httpClient.get.calls.argsFor(1);
+                expect(firstCallArguments[0]).toEqual("http://endpoint.com/getListApi");
+                expect(firstCallArguments[1] instanceof StrictGsonParser).toBe(true);
+                expect(secondCallArguments[0]).toEqual("http://endpoint.com/getListApi");
+                expect(secondCallArguments[1] instanceof GsonParser).toBe(true);
+            });
+        });
     });
 
-    describe("When you pass parameters to the service", function () {
+    describe("when you pass parameters to the service", function () {
 
         it("should substitute the url param if matches", function () {
             spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));

@@ -3,6 +3,8 @@
 var Promise = require('bluebird'),
     common = require('ng-common'),
     httpClient = new common.net.HttpClient(),
+    memCacheProvider = new common.net.MemCacheProvider(),
+    memCacheHttpClient = new common.net.MemCacheHttpClient(httpClient, memCacheProvider),
     RestAdapter = require('../lib/rest/RestAdapter'),
     TestInterface = require('./fixtures/TestInterface'),
     TestType = require('./fixtures/TestType'),
@@ -73,6 +75,27 @@ describe('Rest', function () {
 
             service.jsonpList();
             expect(httpClient.jsonp.calls.argsFor(0)[0]).toEqual("http://endpoint.com/jsonpListApi");
+        });
+
+        describe("and you need different http clients", function () {
+
+            it("should use the right http client", function () {
+                spyOn(httpClient, "get").and.returnValue(Promise.resolve());
+                spyOn(memCacheHttpClient, "get").and.returnValue(Promise.resolve());
+                restAdapter.setEndpoint("http://endpoint.com/");
+                restAdapter.setHttpClientHandler(function (method) {
+                    if (method === "getList")
+                        return memCacheHttpClient;
+                });
+                var service = restAdapter.create(TestInterface);
+                service.getList();
+                service.getListMultiParse();
+
+                var firstCallArguments = memCacheHttpClient.get.calls.argsFor(0),
+                    secondCallArguments = httpClient.get.calls.argsFor(0);
+                expect(firstCallArguments[0]).toEqual("http://endpoint.com/getListApi");
+                expect(secondCallArguments[0]).toEqual("http://endpoint.com/getListApi");
+            });
         });
     });
 

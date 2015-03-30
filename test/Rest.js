@@ -114,7 +114,7 @@ describe('Rest', function () {
     });
 
     describe("When you pass parameters to the service", function () {
-        
+
         it("should substitute the url param if matches", function () {
             spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
             restAdapter.setEndpoint("http://endpoint.com/");

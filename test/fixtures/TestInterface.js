@@ -35,4 +35,6 @@ TestInterface.prototype.updateListWithIdAndData = r(Methods.PUT, "updateListApi/
 
 TestInterface.prototype.jsonpList = r(Methods.JSONP, "jsonpListApi");
 
+TestInterface.prototype.multipartImage = r(Methods.MULTIPART, "multipartImage");
+
 module.exports = TestInterface;

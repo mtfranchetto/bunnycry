@@ -77,6 +77,15 @@ describe('Rest', function () {
             expect(httpClient.jsonp.calls.argsFor(0)[0]).toEqual("http://endpoint.com/jsonpListApi");
         });
 
+        it("should create a multipart method on the service", function () {
+            spyOn(httpClient, "multipart").and.returnValue(Promise.resolve());
+            restAdapter.setEndpoint("http://endpoint.com/");
+            var service = restAdapter.create(TestInterface);
+
+            service.multipartImage();
+            expect(httpClient.multipart.calls.argsFor(0)[0]).toEqual("http://endpoint.com/multipartImage");
+        });
+
         describe("and you need different http clients", function () {
 
             it("should use the right http client", function () {

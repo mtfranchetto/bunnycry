@@ -240,6 +240,20 @@ describe('Rest', function () {
             }, null);
         });
 
+        it("should pass an object also to the multipart body", function () {
+            spyOn(httpClient, "multipart").and.returnValue(Promise.resolve({'description': 'desc'}));
+            restAdapter.setEndpoint("http://endpoint.com/");
+            var service = restAdapter.create(TestInterface);
+
+            service.multipartListWithIdAndData(60, {
+                "description": "test list"
+            });
+
+            expect(httpClient.multipart).toHaveBeenCalledWith("http://endpoint.com/updateListApi/60", {
+                "description": "test list"
+            }, null);
+        });
+
         it("should substitute the url params also if the placeholder has a name", function () {
             spyOn(httpClient, "get").and.returnValue(Promise.resolve({'description': 'desc'}));
             restAdapter.setEndpoint("http://endpoint.com/");

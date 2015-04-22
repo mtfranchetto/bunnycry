@@ -6,3 +6,4 @@ coverage/*
 .idea/*
 bower_components/*
 test-results.xml
+analysis/*

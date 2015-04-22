@@ -33,6 +33,8 @@ TestInterface.prototype.updateList = r(Methods.PUT, "updateListApi");
 
 TestInterface.prototype.updateListWithIdAndData = r(Methods.PUT, "updateListApi/${}");
 
+TestInterface.prototype.multipartListWithIdAndData = r(Methods.MULTIPART, "updateListApi/${}");
+
 TestInterface.prototype.jsonpList = r(Methods.JSONP, "jsonpListApi");
 
 TestInterface.prototype.multipartImage = r(Methods.MULTIPART, "multipartImage");

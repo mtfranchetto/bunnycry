@@ -2,7 +2,8 @@
 
 module.exports = {
     "messages": {
-        "Bus": require('./lib/messages/Bus')
+        "Bus": require('./lib/messages/Bus'),
+        "CompositeSubscription": require('./lib/messages/CompositeSubscription')
     },
     "rest": {
         "InterfaceConstructor": require('./lib/rest/InterfaceConstructor'),

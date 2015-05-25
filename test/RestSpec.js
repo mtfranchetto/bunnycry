@@ -281,4 +281,25 @@ describe('Rest', function () {
             expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi/10?query=0&test=");
         });
     });
+
+    it("should add a loader to the service", function () {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve());
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getList();
+        expect(httpClient.get.calls.argsFor(0)[0]).toEqual("http://endpoint.com/getListApi");
+        expect(service.getList.loading).toBe(true);
+    });
+
+    it("should remove the loader from a service", function (done) {
+        spyOn(httpClient, "get").and.returnValue(Promise.resolve());
+        restAdapter.setEndpoint("http://endpoint.com/");
+        var service = restAdapter.create(TestInterface);
+
+        service.getList().finally(function () {
+            expect(service.getList.loading).toBe(false);
+            done();
+        })
+    });
 });

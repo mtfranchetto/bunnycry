@@ -92,7 +92,7 @@ describe('Rest', function () {
                 spyOn(httpClient, "get").and.returnValue(Promise.resolve());
                 spyOn(memCacheHttpClient, "get").and.returnValue(Promise.resolve());
                 restAdapter.setEndpoint("http://endpoint.com/");
-                restAdapter.setHttpClientHandler(function (method) {
+                restAdapter.setHttpClientHandler(function (config, method) {
                     if (method === "getList")
                         return memCacheHttpClient;
                 });
@@ -153,7 +153,7 @@ describe('Rest', function () {
             it("should use a specific parser", function () {
                 spyOn(httpClient, "get").and.returnValue(Promise.resolve());
                 restAdapter.setEndpoint("http://endpoint.com/");
-                restAdapter.setParserHandler(function (method, type) {
+                restAdapter.setParserHandler(function (config, method, type) {
                     if (method === "getList")
                         return new StrictGsonParser([type]);
                 });

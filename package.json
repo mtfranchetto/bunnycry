@@ -13,7 +13,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "http://trl-git-server/tierra/bunnycry"
+        "url": "https://github.com/mtfranchetto/bunnycry"
     },
     "devDependencies": {
         "browserify-istanbul": "~0.2.0",

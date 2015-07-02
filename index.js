@@ -39,8 +39,7 @@ module.exports = {
         StrictGsonParser: require('./lib/net/StrictGsonParser'),
         Parser: require('./lib/net/Parser'),
         Methods: require('./lib/net/Methods'),
-        QueryStringSerializer: require('./lib/net/QueryStringSerializer'),
-        WorkerHttpClient: require('./lib/net/WorkerHttpClient')
+        QueryStringSerializer: require('./lib/net/QueryStringSerializer')
     },
     angular: {
         ScopeInvoker: require('./lib/angular/ScopeInvoker'),

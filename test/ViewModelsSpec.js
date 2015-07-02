@@ -5,8 +5,8 @@ var angular = require('angular'),
     module = window.module,
     inject = window.inject,
     Registry = require('../lib/Registry'),
-    ViewModel = require('../lib/ViewModel'),
-    ComposableViewModel = require('../lib/ComposableViewModel'),
+    ViewModel = require('../lib/viewmodels/ViewModel'),
+    ComposableViewModel = require('../lib/viewmodels/ComposableViewModel'),
     ToolbarViewModel = require('./fixtures/ToolbarViewModel'),
     Bus = require('../lib/messages/Bus');
 

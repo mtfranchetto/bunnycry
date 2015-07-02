@@ -7,6 +7,9 @@ Building blocks for AngularJS applications.
 ##Install
 `npm install bunnycry`
 
+##Test
+`npm test`
+
 ##Docs
 
 See [test](https://github.com/mtfranchetto/bunnycry/tree/master/test).

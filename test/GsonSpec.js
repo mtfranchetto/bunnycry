@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-describe('GSON', function () {
+describe('Gson', function () {
 
     var Gson = require('../lib/io/Gson'),
         TestModel = require('./fixtures/TestModel'),

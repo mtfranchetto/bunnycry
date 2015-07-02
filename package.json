@@ -23,7 +23,8 @@
     },
     "scripts": {
         "install": "bower install",
-        "smild": "smild"
+        "test": "./node_modules/.bin/smild test",
+        "watch-test": "./node_modules/.bin/smild watch-test"
     },
     "engines": {
         "node": ">=0.10.0"
@@ -48,8 +49,7 @@
     "smild": {
         "module": true,
         "testTransforms": [
-            "browserify-istanbul",
-            "browserify-shim"
+            "browserify-istanbul"
         ]
     }
 }

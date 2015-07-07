@@ -213,7 +213,28 @@ describe('ViewModels', function () {
             scope.$destroy();
 
             expect(composableViewModel.toolbar.destroy).toHaveBeenCalled();
+        });
 
+        it("should watch the property changes of a complex property", function () {
+            var spy = jasmine.createSpy();
+            propertiesRegistry.register('SampleContext', 'toolbar.complexProperty');
+            bus.subscribe('SampleContext', 'toolbar.complexProperty', spy);
+            viewModelsRegistry.register('SampleContext', 'Toolbar', 'ToolbarViewModel');
+            var scope = rootScope.$new(),
+                composableViewModel = controllerProvider('ComposableViewModel', {
+                    'context': 'SampleContext',
+                    'scope': scope,
+                    'bus': bus,
+                    'propertiesRegistry': propertiesRegistry,
+                    'eventsRegistry': eventsRegistry,
+                    'viewModelsRegistry': viewModelsRegistry,
+                    'controllerFactory': controllerProvider
+                });
+
+            composableViewModel.toolbar.complexProperty.a.b = 'bar';
+            scope.$digest();
+
+            expect(spy).toHaveBeenCalledWith({newValue: {a: {b: 'bar'}}, oldValue: {a: {b: 'bar'}}});
         });
     });
 });

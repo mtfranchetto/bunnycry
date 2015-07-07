@@ -5,7 +5,14 @@ var ToolbarViewModel = function (context, namespace) {
     this._context = context;
 };
 
-ToolbarViewModel.prototype.destroy = function () {};
+ToolbarViewModel.prototype.complexProperty = {
+    a: {
+        b: "foo"
+    }
+};
+
+ToolbarViewModel.prototype.destroy = function () {
+};
 
 ToolbarViewModel.prototype.order = 'asc';
 

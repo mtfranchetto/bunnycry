@@ -1,7 +1,7 @@
 "use strict";
 
 var Promise = require('bluebird'),
-    common = require('ng-common'),
+    common = require('../'),
     httpClient = new common.net.HttpClient(),
     memCacheProvider = new common.net.MemCacheProvider(),
     memCacheHttpClient = new common.net.MemCacheHttpClient(httpClient, memCacheProvider),

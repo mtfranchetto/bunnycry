@@ -1,7 +1,7 @@
 "use strict";
 
 var r = require('../../lib/rest/InterfaceConstructor'),
-    Methods = require('ng-common').net.Methods,
+    Methods = require('../../lib/net/Methods'),
     TestType = require('./TestType'),
     TestType2 = require('./TestType2');
 

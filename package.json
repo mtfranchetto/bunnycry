@@ -1,6 +1,6 @@
 {
     "name": "bunnycry",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Bunnycry - Building blocks for Angular applications",
     "dependencies": {
         "lodash": "~3.5.0",

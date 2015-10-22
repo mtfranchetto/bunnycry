@@ -13,6 +13,7 @@ module.exports = {
     Bootstrapper: require('./lib/Bootstrapper'),
     ValueHolder: require('./lib/ValueHolder'),
     DataRetriever: require('./lib/DataRetriever'),
+    BaseExecutor: require('./lib/BaseExecutor'),
     Watcher: require('./lib/Watcher'),
     viewmodels: {
         ViewModel: require('./lib/viewmodels/ViewModel'),

@@ -1,6 +1,6 @@
 {
     "name": "bunnycry",
-    "version": "1.2.1",
+    "version": "2.0.0",
     "description": "Bunnycry - Building blocks for Angular applications",
     "dependencies": {
         "lodash": "~3.5.0",
@@ -11,7 +11,7 @@
         "jquery": "~2.1.1"
     },
     "peerDependencies": {
-        "angular": ">=1.4.7"
+        "angular": ">=1.6.8"
     },
     "repository": {
         "type": "git",
@@ -20,7 +20,7 @@
     "devDependencies": {
         "browserify-istanbul": "~0.2.0",
         "smild": "~2.0.0",
-        "angular-mocks": "1.4.7"
+        "angular-mocks": "1.6.8"
     },
     "scripts": {
         "test": "./node_modules/.bin/smild test",
